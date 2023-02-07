@@ -1,5 +1,7 @@
 # Harris Corner Detection
 
+## See https://hackmd.io/@mingyang-tu/BkRebukpo
+
 ## Procedure
 
 1. Compute the $x$ and $y$ derivatives of image $I$.
