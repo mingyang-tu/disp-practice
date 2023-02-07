@@ -23,12 +23,8 @@ def bilateral_filter(seq_x: NDArray[np.float64], k1: float, k2: float, L: int = 
     seq_y = np.zeros(len_x, dtype=np.float64)
     for i in range(len_x):
         s, e = max(i - L, 0), min(i + L + 1, len_x)
-        weights = (
-            np.exp(
-                - k1 * np.square(np.arange(s, e, dtype=np.float64) - i)
-                - k2 * np.square(seq_x[s: e] - seq_x[i])
-            )
-        )
+        weights = np.exp(- k1 * np.square(np.arange(s, e, dtype=np.float64) - i)
+                         - k2 * np.square(seq_x[s: e] - seq_x[i]))
         weight_C = 1 / np.sum(weights)
         seq_y[i] = weight_C * np.sum(seq_x[s: e] * weights)
     return seq_y
@@ -67,17 +63,14 @@ def lowpass_mask_img(shape: tuple[int, int], thres_div: float) -> NDArray[np.flo
     mask = np.zeros(shape, dtype=np.float64)
     row_i, col_i = np.mgrid[0: shape[0], 0: shape[1]]
     mask[
-        (row_i + col_i <= threshold) |
-        (shape[0] - row_i + col_i <= threshold) |
-        (row_i + shape[1] - col_i <= threshold) |
-        (shape[0] - row_i + shape[1] - col_i <= threshold)
+        (row_i + col_i <= threshold) | (shape[0] - row_i + col_i <= threshold) |
+        (row_i + shape[1] - col_i <= threshold) | (shape[0] - row_i + shape[1] - col_i <= threshold)
     ] = 1.
     return mask
 
 
 def blur_filter_img(L: int = 10, sigma: float = 0.1) -> NDArray[np.float64]:
-    row_i, col_i = np.mgrid[-L: L+1,
-                            -L: L+1].astype(np.float64)
+    row_i, col_i = np.mgrid[-L: L+1, -L: L+1].astype(np.float64)
     filt = np.exp(-sigma * (row_i ** 2 + col_i ** 2))
     return filt / np.sum(filt)
 
@@ -95,8 +88,6 @@ def wiener_filter_img(img: NDArray[np.float64], mat_k: NDArray[np.float64], C: f
     mag_k_fft = abs(mat_k_fft)
     phase_k_fft = np.angle(mat_k_fft)
 
-    inv_k_fft = 1 / (
-        (C / (mag_k_fft + 1e-5) + mag_k_fft) * np.exp(1j * phase_k_fft)
-    )
+    inv_k_fft = 1 / ((C / (mag_k_fft + 1e-5) + mag_k_fft) * np.exp(1j * phase_k_fft))
 
     return np.fft.ifft2(img_fft * inv_k_fft).real

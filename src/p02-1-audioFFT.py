@@ -12,9 +12,7 @@ if __name__ == '__main__':
 
     fft_data = np.fft.fftshift(np.fft.fft(wave_data[:, 0]).real / fs)
 
-    freq = np.concatenate(
-        [range(n0 - nframes, 0), range(0, n0)]
-    ) * fs / nframes
+    freq = np.concatenate([range(n0 - nframes, 0), range(0, n0)]) * fs / nframes
 
     plt.figure("FFT")
     plt.plot(freq, fft_data)

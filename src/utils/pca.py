@@ -9,12 +9,10 @@ class PCA:
         self.mean = np.mean(data, axis=1)
 
         self.X = data - self.mean.reshape(-1, 1)
+
         eig = np.linalg.eig(np.dot(self.X, self.X.T))
-        order = sorted(
-            range(len(eig[0])),
-            key=lambda x: eig[0][x],
-            reverse=True
-        )
+        order = sorted(range(len(eig[0])), key=lambda x: eig[0][x], reverse=True)
+
         self.eigval = eig[0][order]
         self.eigvec = eig[1][:, order]
         # eigvec = [u1 u2 ... um]

@@ -13,12 +13,9 @@ def harris_corner(img: NDArray[np.float64], window_L: int, k: float, threshold: 
 
     gaussian = blur_filter_img(window_L, 0.1)
 
-    mat_A = signal.convolve2d(np.square(mat_Ix), gaussian,
-                              boundary='symm', mode='same')
-    mat_B = signal.convolve2d(np.square(mat_Iy), gaussian,
-                              boundary='symm', mode='same')
-    mat_C = signal.convolve2d(mat_Ix * mat_Iy, gaussian,
-                              boundary='symm', mode='same')
+    mat_A = signal.convolve2d(np.square(mat_Ix), gaussian, boundary='symm', mode='same')
+    mat_B = signal.convolve2d(np.square(mat_Iy), gaussian, boundary='symm', mode='same')
+    mat_C = signal.convolve2d(mat_Ix * mat_Iy, gaussian, boundary='symm', mode='same')
 
     det = mat_A * mat_B - np.square(mat_C)
     trace = mat_A + mat_B

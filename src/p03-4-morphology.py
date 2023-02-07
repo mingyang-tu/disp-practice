@@ -16,16 +16,14 @@ if __name__ == '__main__':
     plt.figure("Dilation")
     plt.imshow(cv2.dilate(binary, kernel, iterations=3), cmap="gray")
     plt.figure("Opening")
-    plt.imshow(cv2.erode(
-        cv2.dilate(binary, kernel, iterations=3),
-        kernel,
-        iterations=3
-    ), cmap="gray")
+    plt.imshow(
+        cv2.erode(cv2.dilate(binary, kernel, iterations=3), kernel, iterations=3),
+        cmap="gray"
+    )
     plt.figure("Closing")
-    plt.imshow(cv2.dilate(
-        cv2.erode(binary, kernel, iterations=3),
-        kernel,
-        iterations=3
-    ), cmap="gray")
+    plt.imshow(
+        cv2.dilate(cv2.erode(binary, kernel, iterations=3), kernel, iterations=3),
+        cmap="gray"
+    )
 
     plt.show()
