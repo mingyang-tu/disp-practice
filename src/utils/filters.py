@@ -34,7 +34,7 @@ def match_filter(seq_x: NDArray[np.float64], target: NDArray[np.float64]) -> NDA
     len_h = target.shape[0]
     seq_h = np.conj(target)
     mean_h = np.mean(seq_h)
-    sig_h = np.sqrt(np.sum(np.square(seq_h - mean_h)))
+    sig_h = np.sqrt(np.sum(np.square(np.abs(seq_h - mean_h))))
     if sig_h > 0:
         norm_h = (seq_h - mean_h) / sig_h
     else:

@@ -10,7 +10,7 @@ if __name__ == '__main__':
     fs, nframes = params.framerate, params.nframes
     n0 = int(np.ceil(nframes / 2))
 
-    fft_data = np.fft.fftshift(np.fft.fft(wave_data[:, 0]).real / fs)
+    fft_data = np.fft.fftshift(np.abs(np.fft.fft(wave_data[:, 0])) / fs)
 
     freq = np.concatenate([range(n0 - nframes, 0), range(0, n0)]) * fs / nframes
 
