@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils.noise import add_gaussian_noise
-from utils.filters import bilateral_filter
+from utils.filters import bilateral_filter_1d
 
 
 if __name__ == '__main__':
@@ -16,6 +16,6 @@ if __name__ == '__main__':
     plt.subplot(212)
     plt.plot(axis_n, data_x)
     # plt.plot(n, y)
-    plt.plot(axis_n, bilateral_filter(data_y, 0.1, 5, 5))
+    plt.plot(axis_n, bilateral_filter_1d(data_y, 0.1, 5, 5))
 
     plt.show()

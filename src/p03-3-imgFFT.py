@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils.filters import lowpass_mask_img
+from utils.filters import lowpass_mask_2d
 
 
 if __name__ == '__main__':
@@ -10,7 +10,7 @@ if __name__ == '__main__':
     baboon = plt.imread(root_path + "Baboon.bmp").astype(np.float64)
     baboon_fft = np.fft.fft2(baboon)
 
-    low = lowpass_mask_img(lena.shape, 30)
+    low = lowpass_mask_2d(lena.shape, 30)
     high = 1. - low
 
     img_new = np.fft.ifft2(lena_fft * low + baboon_fft * high).real

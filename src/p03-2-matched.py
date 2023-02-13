@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils.filters import match_filter
+from utils.filters import match_filter_1d
 
 
 if __name__ == '__main__':
@@ -18,6 +18,6 @@ if __name__ == '__main__':
     plt.subplot(211)
     plt.stem(axis_n, data_x)
     plt.subplot(212)
-    plt.stem(axis_n, match_filter(data_x, np.arange(-5, 6) / 10))
+    plt.stem(axis_n, match_filter_1d(data_x, np.arange(-5, 6) / 10))
 
     plt.show()

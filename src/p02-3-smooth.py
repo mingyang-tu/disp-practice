@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 from utils.noise import add_gaussian_noise
-from utils.filters import smoother_filter
+from utils.filters import smoother_filter_1d
 
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
         amp=1
     )
 
-    sf = smoother_filter(sigma=0.1, L=5)
+    sf = smoother_filter_1d(sigma=0.1, L=5)
 
     axis_n = np.arange(-50, 101, dtype=np.int64)
 

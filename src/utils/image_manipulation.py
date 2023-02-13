@@ -17,7 +17,7 @@ def bilinear_interpolation(img: NDArray[np.float64], m1: NDArray[np.float64], n1
     )
 
 
-def inv_2d_mat(mat: NDArray[np.float64]) -> NDArray[np.float64]:
+def inv_2x2_mat(mat: NDArray[np.float64]) -> NDArray[np.float64]:
     if mat.shape[0] != 2 or mat.shape[1] != 2:
         raise ValueError("invalid input (mat)")
 
@@ -45,7 +45,7 @@ def affine_transformation(img: NDArray[np.float64], mat: NDArray[np.float64]) ->
 
     row_i, col_i = np.mgrid[0: row, 0: col].astype(np.float64) - center
 
-    (ai, bi), (ci, di) = inv_2d_mat(mat)
+    (ai, bi), (ci, di) = inv_2x2_mat(mat)
     m1 = ai * row_i + bi * col_i + center[0]
     n1 = ci * row_i + di * col_i + center[1]
 

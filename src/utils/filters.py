@@ -13,12 +13,12 @@ def edge_detection_filter_1d(sigma: float, L: int = 10) -> NDArray[np.float64]:
     ])
 
 
-def smoother_filter(sigma: float, L: int = 10) -> NDArray[np.float64]:
+def smoother_filter_1d(sigma: float, L: int = 10) -> NDArray[np.float64]:
     seq_h = np.exp(-sigma * np.abs(np.arange(-L, L+1, dtype=np.float64)))
     return seq_h / np.sum(seq_h)
 
 
-def bilateral_filter(seq_x: NDArray[np.float64], k1: float, k2: float, L: int = 10) -> NDArray[np.float64]:
+def bilateral_filter_1d(seq_x: NDArray[np.float64], k1: float, k2: float, L: int = 10) -> NDArray[np.float64]:
     len_x = seq_x.shape[0]
     seq_y = np.zeros(len_x, dtype=np.float64)
     for i in range(len_x):
@@ -30,7 +30,7 @@ def bilateral_filter(seq_x: NDArray[np.float64], k1: float, k2: float, L: int = 
     return seq_y
 
 
-def match_filter(seq_x: NDArray[np.float64], target: NDArray[np.float64]) -> NDArray[np.float64]:
+def match_filter_1d(seq_x: NDArray[np.float64], target: NDArray[np.float64]) -> NDArray[np.float64]:
     len_h = target.shape[0]
     seq_h = np.conj(target)
     mean_h = np.mean(seq_h)
@@ -41,10 +41,7 @@ def match_filter(seq_x: NDArray[np.float64], target: NDArray[np.float64]) -> NDA
         raise ValueError("the variance of target is equal to 0")
 
     len_x = seq_x.shape[0]
-    x_pad = np.concatenate(
-        [seq_x, np.zeros(len_h, dtype=np.float64)],
-        dtype=np.float64
-    )
+    x_pad = np.pad(seq_x, (0, len_h))
 
     seq_y = np.zeros(len_x, dtype=np.float64)
     for i in range(len_x):
@@ -58,7 +55,7 @@ def match_filter(seq_x: NDArray[np.float64], target: NDArray[np.float64]) -> NDA
     return seq_y
 
 
-def lowpass_mask_img(shape: tuple[int, int], thres_div: float) -> NDArray[np.float64]:
+def lowpass_mask_2d(shape: tuple[int, int], thres_div: float) -> NDArray[np.float64]:
     threshold = min(shape) / thres_div
     mask = np.zeros(shape, dtype=np.float64)
     row_i, col_i = np.mgrid[0: shape[0], 0: shape[1]]
@@ -69,13 +66,13 @@ def lowpass_mask_img(shape: tuple[int, int], thres_div: float) -> NDArray[np.flo
     return mask
 
 
-def blur_filter_img(L: int = 10, sigma: float = 0.1) -> NDArray[np.float64]:
+def gaussian_filter_2d(L: int = 10, sigma: float = 0.1) -> NDArray[np.float64]:
     row_i, col_i = np.mgrid[-L: L+1, -L: L+1].astype(np.float64)
     filt = np.exp(-sigma * (row_i ** 2 + col_i ** 2))
     return filt / np.sum(filt)
 
 
-def wiener_filter_img(img: NDArray[np.float64], mat_k: NDArray[np.float64], C: float) -> NDArray[np.float64]:
+def wiener_filter_2d(img: NDArray[np.float64], mat_k: NDArray[np.float64], C: float) -> NDArray[np.float64]:
     row, col = img.shape
     row_k, col_k = mat_k.shape
 
