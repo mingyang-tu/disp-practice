@@ -9,7 +9,7 @@ if __name__ == '__main__':
     root_path = "../images/"
     lena = plt.imread(root_path + "lena.bmp").astype(np.float64)
     filt = gaussian_filter_2d(L=10, sigma=0.1)
-    blurred = signal.convolve2d(lena, filt, boundary='symm', mode='same')
+    blurred = signal.convolve2d(lena, filt, boundary='wrap', mode='same')
     blurred_gaussian = add_gaussian_image(blurred, 5)
 
     # plt.figure("Filter")
